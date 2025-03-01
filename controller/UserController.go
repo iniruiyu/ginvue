@@ -135,12 +135,26 @@ func Login(c *gin.Context) {
 	}
 
 	// 发放Token给前端
-	token := "1111111111111111111"
+	token, err := common.ReleaseToken(user)
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{
+				"code": "500",
+				"msg":  "token 发放失败"})
+		return
+	}
 	// 返回结果
 	c.JSON(200, gin.H{
 		"code":    "200",
 		"token":   token,
 		"message": "登录成功",
+	})
+}
+func Info(c *gin.Context) {
+	user, _ := c.Get("user")
+	c.JSON(http.StatusOK, gin.H{
+		"user": user,
 	})
 }
 
