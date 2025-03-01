@@ -3,6 +3,7 @@ package common
 import (
 	"fmt"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"iniyou.com/model"
@@ -13,12 +14,13 @@ var DB *gorm.DB
 func InitDB() *gorm.DB {
 
 	//dirverName := "mysql"
-	host := "localhost"
-	port := "3306"
-	database := "gin"
-	username := "root"
-	password := "root"
-	charset := "utf8"
+	host := viper.GetString("database.host")
+	port := viper.GetString("database.port")
+	databaseName := viper.GetString("database.databaseName")
+	username := viper.GetString("database.user")
+	password := viper.GetString("database.password")
+	charset := viper.GetString("database.charset")
+
 	// 构造 DSN (Data Source Name)
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
@@ -26,9 +28,10 @@ func InitDB() *gorm.DB {
 		password,
 		host,
 		port,
-		database,
+		databaseName,
 		charset,
 	)
+	fmt.Println(dsn)
 
 	// 使用 mysql.New 创建 Dialector 实例
 	dialector := mysql.New(mysql.Config{
