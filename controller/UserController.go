@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 	"iniyou.com/common"
+	"iniyou.com/dto"
 	"iniyou.com/model"
 	"iniyou.com/utils"
 )
@@ -154,7 +155,7 @@ func Login(c *gin.Context) {
 func Info(c *gin.Context) {
 	user, _ := c.Get("user")
 	c.JSON(http.StatusOK, gin.H{
-		"user": user,
+		"user": dto.ToUserDto(user.(model.User)),
 	})
 }
 
