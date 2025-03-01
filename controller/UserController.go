@@ -8,6 +8,7 @@ import (
 	"iniyou.com/common"
 	"iniyou.com/dto"
 	"iniyou.com/model"
+	"iniyou.com/response"
 	"iniyou.com/utils"
 )
 
@@ -20,28 +21,15 @@ func Reigster(c *gin.Context) {
 	// 数据验证
 	if len(name) == 0 {
 		name = utils.RandomString(10)
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "ok",
-				"msg":  name})
+		response.Response(c, http.StatusOK, 200, nil, "name长度为0，已分配随机昵称")
 		//return
 	}
 	if len(telephone) != 11 {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "422",
-				"msg":  "手机号错误",
-				"len":  telephone})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "手机号错误")
 		return
 	}
 	if len(password) < 6 {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "422",
-				"msg":  "密码过短"})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "密码过短")
 		return
 	}
 
@@ -49,18 +37,12 @@ func Reigster(c *gin.Context) {
 
 	if isTelephoneExist(telephone) {
 		// 不允许注册
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{"code": "422",
-				"msg": "用户已存在"})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "用户已存在")
 		return
 	}
 	hasedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(
-			http.StatusInternalServerError,
-			gin.H{"code": "500",
-				"msg": "密码加密出错"})
+		response.Response(c, http.StatusInternalServerError, 500, nil, "密码加密出错")
 	}
 	// 创建用户
 	newUser := model.User{
@@ -71,10 +53,11 @@ func Reigster(c *gin.Context) {
 	DB.Create(&newUser)
 	// 返回结果
 
-	c.JSON(200, gin.H{
+	/*c.JSON(200, gin.H{
 
 		"message": "注册成功",
-	})
+	})*/
+	response.Success(c, nil, "注册成功")
 }
 
 func Login(c *gin.Context) {
@@ -85,29 +68,16 @@ func Login(c *gin.Context) {
 	// 数据验证
 
 	if len(name) == 0 {
-		name = utils.RandomString(10)
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "ok",
-				"msg":  name})
+		//name = utils.RandomString(10)
+		response.Response(c, http.StatusOK, 200, nil, "name长度为0，已分配随机昵称")
 		//return
 	}
 	if len(telephone) != 11 {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "422",
-				"msg":  "手机号错误",
-				"len":  telephone})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "手机号错误")
 		return
 	}
 	if len(password) < 6 {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "422",
-				"msg":  "密码过短"})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "密码过短")
 		return
 	}
 
@@ -115,11 +85,7 @@ func Login(c *gin.Context) {
 	if isTelephoneExist(telephone) {
 
 	} else {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "422",
-				"msg":  "用户不存在"})
+		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "用户不存在")
 		return
 	}
 	// 判断密码是否正确
@@ -127,30 +93,18 @@ func Login(c *gin.Context) {
 	var user model.User
 	db.Where("telephone = ?", telephone).First(&user)
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		c.JSON(
-			http.StatusUnprocessableEntity,
-			gin.H{
-				"code": "400",
-				"msg":  "密码错误"})
+		response.Fail(c, nil, "密码错误")
 		return
 	}
 
 	// 发放Token给前端
 	token, err := common.ReleaseToken(user)
 	if err != nil {
-		c.JSON(
-			http.StatusInternalServerError,
-			gin.H{
-				"code": "500",
-				"msg":  "token 发放失败"})
+		response.Response(c, http.StatusInternalServerError, 500, nil, "token 发放失败")
 		return
 	}
 	// 返回结果
-	c.JSON(200, gin.H{
-		"code":    "200",
-		"token":   token,
-		"message": "登录成功",
-	})
+	response.Success(c, gin.H{"token": token}, "登录成功")
 }
 func Info(c *gin.Context) {
 	user, _ := c.Get("user")
