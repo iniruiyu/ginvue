@@ -14,10 +14,29 @@ import (
 
 func Reigster(c *gin.Context) {
 	DB := common.GetDB()
-	// 获取参数
-	name := c.PostForm("name")
+
+	// 前后端分离，获取JSON参数
+	// 使用map获取参数
+	//var requestMap = make(map[string]string)
+	//json.NewDecoder(c.Request.Body).Decode(&requestMap)
+	//name := requestMap["name"]
+	//telephone := requestMap["telephone"]
+	//password := requestMap["password"]
+
+	// 2.1使用结构体获取参数
+	var requestUser = model.User{}
+	//json.NewDecoder(c.Request.Body).Decode(&requestUser)
+
+	// 2.2使用结构体获取参数，等价于以下代码
+	c.Bind(&requestUser)
+	name := requestUser.Name
+	telephone := requestUser.Telephone
+	password := requestUser.Password
+
+	// 前后端分离不能获取表单参数！！！！！！！！
+	/*name := c.PostForm("name")
 	telephone := c.PostForm("telephone")
-	password := c.PostForm("password")
+	password := c.PostForm("password")*/
 	// 数据验证
 	if len(name) == 0 {
 		name = utils.RandomString(10)
@@ -53,11 +72,13 @@ func Reigster(c *gin.Context) {
 	DB.Create(&newUser)
 	// 返回结果
 
-	/*c.JSON(200, gin.H{
-
-		"message": "注册成功",
-	})*/
-	response.Success(c, nil, "注册成功")
+	// 发放Token给前端
+	token, err := common.ReleaseToken(newUser)
+	if err != nil {
+		response.Response(c, http.StatusInternalServerError, 500, nil, "token 发放失败")
+		return
+	}
+	response.Success(c, gin.H{"token": token}, "注册成功")
 }
 
 func Login(c *gin.Context) {
