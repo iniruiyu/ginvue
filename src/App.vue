@@ -27,24 +27,19 @@ const userInfo = computed(() =>{
     >
       <el-menu-item index="1" @click="router.push({path:'/home'})">Processing Center</el-menu-item>
       <el-menu-item index="2" disabled>Info</el-menu-item>
-
-
-
-
-
       <div class="flex-grow"  />
       <el-menu-item @click="router.replace('/login')" index="3">Login</el-menu-item>
-      <el-menu-item @click="router.push('/register')" index="3"> Register</el-menu-item>
-      <el-sub-menu index="4">
+      <el-menu-item @click="router.push('/register')" index="4"> Register</el-menu-item>
+      <el-sub-menu index="5">
         <template #title>Workspace</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-        <el-sub-menu index="2-4">
+        <el-menu-item index="5-1">item one</el-menu-item>
+        <el-menu-item index="5-2">item two</el-menu-item>
+        <el-menu-item index="5-3">item three</el-menu-item>
+        <el-sub-menu index="5-4">
           <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
+          <el-menu-item index="5-4-1">item one</el-menu-item>
+          <el-menu-item index="5-4-2">item two</el-menu-item>
+          <el-menu-item index="5-4-3">item three</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
     </el-menu>
@@ -63,25 +58,20 @@ const userInfo = computed(() =>{
     >
       <el-menu-item index="1" @click="router.push({path:'/home'})">Processing Center</el-menu-item>
       <el-menu-item index="2" disabled>Info</el-menu-item>
-
-
-
-
-
       <div class="flex-grow"  />
       <el-menu-item @click="router.replace('/login')" index="3">{{userInfo.name}}</el-menu-item>
       <el-menu-item @click="router.push('/register')" index="4">个人主页 </el-menu-item>
       <el-menu-item @click="router.push('/register')" index="5">登出 </el-menu-item>
-      <el-sub-menu index="6">
+      <el-sub-menu index="5">
         <template #title>Workspace</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-        <el-sub-menu index="2-4">
+        <el-menu-item index="5-1">item one</el-menu-item>
+        <el-menu-item index="5-2">item two</el-menu-item>
+        <el-menu-item index="5-3">item three</el-menu-item>
+        <el-sub-menu index="5-4">
           <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
+          <el-menu-item index="5-4-1">item one</el-menu-item>
+          <el-menu-item index="5-4-2">item two</el-menu-item>
+          <el-menu-item index="5-4-3">item three</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
     </el-menu>
