@@ -1,11 +1,4 @@
-<script>
-
-</script>
+<script></script>
 <template>
-
-<div>
-  login
-</div>
+  <div>login</div>
 </template>
-
-
