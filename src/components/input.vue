@@ -22,11 +22,7 @@
         <span class="text-gray-500">-</span>
       </el-col>
       <el-col :span="11">
-        <el-time-picker
-          v-model="form.date2"
-          placeholder="Pick a time"
-          style="width: 100%"
-        />
+        <el-time-picker v-model="form.date2" placeholder="Pick a time" style="width: 100%" />
       </el-col>
     </el-form-item>
     <el-form-item label="Instant delivery">

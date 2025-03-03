@@ -1,6 +1,5 @@
 <template>
-
-<input111/>
+  <input111 />
 
   <h4>1. 按钮</h4>
   <el-row class="mb-4">
@@ -89,5 +88,4 @@ import { Calendar, Check, Delete, Edit, Message, Search, Star } from '@element-p
 import { FIRST_KEYS } from 'element-plus'
 
 import input111 from '@/components/input.vue'
-
 </script>
