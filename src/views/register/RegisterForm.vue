@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/router';
 import axios from 'axios';
 import { reactive, ref } from 'vue';
 
@@ -27,9 +28,13 @@ function register(){
     console.log(res);
 
     // 保存token
+    localStorage.setItem('token',res.data.data.token)
+
     // 跳转主页
+    router.push({path:"/"})
   }).catch(err=>
-    console.log('err',err.response.data.msg)
+    //console.log('err',err.response.data.msg)
+    alert(err.response.data.msg)
   )
 
 }
