@@ -9,7 +9,7 @@ const register = ({ name, telephone, password }) => {
 // 用户登录
 
 const login = ({ name, telephone, password }) => {
-  return request.post('/auth/login', {telephone, password })
+  return request.post('/auth/login', { telephone, password })
 }
 
 // 获取用户信息

@@ -29,5 +29,5 @@ export default {
   get,
   USER_TOKEN,
   USER_INFO,
-  remove
+  remove,
 }

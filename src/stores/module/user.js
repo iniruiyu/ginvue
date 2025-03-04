@@ -28,22 +28,21 @@ const userModule = {
 
   actions: {
     // 可以根据需要添加 actions，例如异步操作
-    login({ commit }, {telephone,password}) {
-      return new Promise((resolve,rejet)=>{
-        userService.login({telephone,password})
-        .then((res)=>{
-          // 保存token
-          commit('SET_TOKEN',res.data.data.token)
-          return userService.info()
-        }).then(
-            (res)=>{
-            commit('SET_USERINFO',res.data.user),
-            resolve(res)
-            }
-        )
-        .catch((err)=>{
-          rejet(err)
-        })
+    login({ commit }, { telephone, password }) {
+      return new Promise((resolve, rejet) => {
+        userService
+          .login({ telephone, password })
+          .then((res) => {
+            // 保存token
+            commit('SET_TOKEN', res.data.data.token)
+            return userService.info()
+          })
+          .then((res) => {
+            commit('SET_USERINFO', res.data.user), resolve(res)
+          })
+          .catch((err) => {
+            rejet(err)
+          })
       })
     },
     loginOut({ commit }) {
@@ -63,13 +62,13 @@ const userModule = {
             console.log('res-', res)
             // 保存token
             //store.commit('userModule/SET_TOKEN', res.data.data.token)
-            commit('SET_TOKEN',res.data.data.token)
+            commit('SET_TOKEN', res.data.data.token)
             return userService.info() // 在成功的返回里面，再返回一个promise，然后就可以链式调用then
           })
           .then((res) => {
             // 保存用户信息
             // store.commit('userModule/SET_USERINFO', res.data.user) // 出错就盯着返回的RES看，看看是不是返回的数据结构不对
-            commit('SET_USERINFO',res.data.user)
+            commit('SET_USERINFO', res.data.user)
             // 成功resolve一下
             resolve(res)
           })

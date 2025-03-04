@@ -71,7 +71,7 @@ const menu_select = ref(true)
 import { computed } from 'vue'
 
 // 导入Vuex导出的store
-import { useStore,mapState,mapActions } from 'vuex'
+import { useStore, mapState, mapActions } from 'vuex'
 const store = useStore()
 
 const userInfo = computed(() => {
@@ -85,9 +85,9 @@ const userInfo = computed(() => {
 // const loginOut = actions.loginOut.bind({ $store: store })
 
 const loginOut = () => {
-      store.dispatch('userModule/loginOut');
-      router.push({path: '/login'})
-};
+  store.dispatch('userModule/loginOut')
+  router.push({ path: '/login' })
+}
 
 /*const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)

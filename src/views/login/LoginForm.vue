@@ -6,7 +6,6 @@ import router from '@/router'
 import { useStore } from 'vuex'
 const store = useStore()
 
-
 const ShowtelephoneValidate = ref(false)
 
 const user = reactive({
@@ -22,12 +21,13 @@ function login() {
     return
   }
   //请求
-  store.dispatch('userModule/login',user)
-  .then(()=>{
-    router.push({ path: '/home' }) // 跳转主页
-  })
-  .catch((err) => {
-    console.log(err);
+  store
+    .dispatch('userModule/login', user)
+    .then(() => {
+      router.push({ path: '/profile' }) // 跳转主页
+    })
+    .catch((err) => {
+      console.log(err)
 
       alert(err.response.data.msg)
     })
@@ -43,6 +43,8 @@ function login() {
 
       <br /> -->
 
+      <h2>用户登录</h2>
+      <br />
       <el-form-item label="手机号">
         <el-input v-model="user.telephone" placeholder="username" clearable />
       </el-form-item>
@@ -71,11 +73,12 @@ function login() {
 
 <style>
 .container {
+  margin-top: auto;
   display: flex;
 
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  height: 200px; /* 设置容器高度 */
+  height: 366px; /* 设置容器高度 */
   /*border: 1px solid black; /* 可视化边界 */
   background-color: #eeeeee;
 }

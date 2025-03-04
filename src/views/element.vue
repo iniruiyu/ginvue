@@ -1,6 +1,4 @@
 <template>
-  <input111 />
-
   <h4>1. 按钮</h4>
   <el-row class="mb-4">
     <el-button>Default</el-button>
@@ -85,7 +83,4 @@
 
 <script lang="ts" setup>
 import { Calendar, Check, Delete, Edit, Message, Search, Star } from '@element-plus/icons-vue'
-import { FIRST_KEYS } from 'element-plus'
-
-import input111 from '@/components/input.vue'
 </script>
