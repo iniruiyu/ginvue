@@ -28,12 +28,25 @@ const userModule = {
 
   actions: {
     // 可以根据需要添加 actions，例如异步操作
-    login({ commit }, payload) {
-      const { token, userInfo } = payload
-      commit('SET_TOKEN', token)
-      commit('SET_USERINFO', userInfo)
+    login({ commit }, {telephone,password}) {
+      return new Promise((resolve,rejet)=>{
+        userService.login({telephone,password})
+        .then((res)=>{
+          // 保存token
+          commit('SET_TOKEN',res.data.data.token)
+          return userService.info()
+        }).then(
+            (res)=>{
+            commit('SET_USERINFO',res.data.user),
+            resolve(res)
+            }
+        )
+        .catch((err)=>{
+          rejet(err)
+        })
+      })
     },
-    logout({ commit }) {
+    loginOut({ commit }) {
       // 清除 Token 和用户信息
       commit('SET_TOKEN', null)
       commit('SET_USERINFO', null)

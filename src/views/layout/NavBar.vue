@@ -41,7 +41,7 @@
     <div class="flex-grow" />
     <el-menu-item @click="router.replace('/login')" index="3">{{ userInfo.name }}</el-menu-item>
     <el-menu-item @click="router.push('/register')" index="4">个人主页 </el-menu-item>
-    <el-menu-item @click="router.push('/register')" index="5">登出 </el-menu-item>
+    <el-menu-item @click="loginOut" index="5">登出 </el-menu-item>
     <el-sub-menu index="5">
       <template #title>Workspace</template>
       <el-menu-item index="5-1">item one</el-menu-item>
@@ -71,15 +71,27 @@ const menu_select = ref(true)
 import { computed } from 'vue'
 
 // 导入Vuex导出的store
-import { useStore } from 'vuex'
+import { useStore,mapState,mapActions } from 'vuex'
 const store = useStore()
 
 const userInfo = computed(() => {
   // 将从缓存中获取修改为，从VUEX中获取
-  console.log('computed,', store.state.userModule.userInfo)
-
+  // console.log('computed,', store.state.userModule.userInfo)
   return store.state.userModule.userInfo
 })
+
+// 使用 mapActions 映射 Vuex 的 actions 不推荐
+// const actions = mapActions('userModule', ['loginOut'])
+// const loginOut = actions.loginOut.bind({ $store: store })
+
+const loginOut = () => {
+      store.dispatch('userModule/loginOut');
+      router.push({path: '/login'})
+};
+
+/*const handleSelect = (key, keyPath) => {
+  console.log(key, keyPath)
+}*/
 </script>
 
 <style scoped>

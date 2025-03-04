@@ -18,10 +18,16 @@ const get = (key) => {
   return localStorage.getItem(key)
 }
 
+//删除
+const remove = (key) => {
+  return localStorage.removeItem(key)
+}
+
 // 导出
 export default {
   set,
   get,
   USER_TOKEN,
   USER_INFO,
+  remove
 }
