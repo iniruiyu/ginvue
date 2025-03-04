@@ -4,13 +4,15 @@ import router from '@/router'
 
 // 导入刚刚创建的services/storageServices.js 缓存服务
 import storageService from '@/services/storageService'
-import userService from '@/services/userService'
+
 
 // 导入Vuex导出的store
 // VUE3组合式这么使用
-import { useStore } from 'vuex';
-const store = useStore();
-
+import { useStore } from 'vuex'
+const store = useStore()
+// 命名空间用法
+// import { createNamespacedHelpers } from 'vuex';
+// const mapMutaions = createNamespacedHelpers('userModule')
 
 const ShowtelephoneValidate = ref(false)
 
@@ -29,38 +31,13 @@ function register() {
   //请求
   //const api = 'http://localhost:8080/api/auth/register'
   //axios.post(api,{...user})
-  userService
-    .register(user)
-    .then((res) => {
-      console.log("res-",res)
-      // 保存token
-      // localStorage.setItem('token',res.data.data.token)
-      // storageService.set(storageService.USER_TOKEN, res.data.data.token)
-      //console.log(res.data.data.token);
-      console.log("then((res1)",res);
-      store.commit('userModule/SET_TOKEN', res.data.data.token)
-
-      // 获取用户信息
-      // 请求中调用请求，逻辑不清晰，改成链式调用
-      return userService.info();  // 在成功的返回里面，再返回一个promise，然后就可以链式调用then
-    }).then((res) => {
-        // 保存用户信息
-        // storageService.set(storageService.USER_INFO, res.data.data.user)
-        // 保存 序列化的 用户信息
-        // storageService.set(storageService.USER_INFO, JSON.stringify(res.data.user))
-        console.log("then((res2)",res);
-
-        store.commit('userModule/SET_USERINFO', res.data.user)  // 出错就盯着返回的RES看，看看是不是返回的数据结构不对
-
-        router.push({ path: '/home' })  // 跳转主页
-      })
-      .catch((err) => {
-      console.log('err',err)
-      /*if (err.response.data.msg){
+  store.dispatch('userModule/register',user)
+  .then(()=>{
+    router.push({ path: '/home' }) // 跳转主页
+  })
+  .catch((err) => {
       alert(err.response.data.msg)
-      }*/
     })
-
 }
 </script>
 

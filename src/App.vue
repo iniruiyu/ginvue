@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import NavBar from './views/layout/NavBar.vue';
+import NavBar from './views/layout/NavBar.vue'
 /*//import element from './views/element.vue'
 import storageService from '@/services/storageService'
 
@@ -25,12 +25,8 @@ const userInfo = computed(() => {
 </script>
 
 <template>
-  <header>
-
-  </header>
- <NavBar/>
+  <header></header>
+  <NavBar />
 
   <RouterView />
 </template>
-
-

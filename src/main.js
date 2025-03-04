@@ -11,11 +11,8 @@ import 'element-plus/dist/index.css'
 //导入elementPlus中的所有图标
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-
 // vuex
-import store from './stores'; // 引入 store
-
-
+import store from './stores' // 引入 store
 
 const app = createApp(App)
 
@@ -28,10 +25,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // 使用 Vuex store
-app.use(store);
+app.use(store)
 
 app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
-
