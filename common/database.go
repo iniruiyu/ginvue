@@ -20,16 +20,18 @@ func InitDB() *gorm.DB {
 	username := viper.GetString("database.user")
 	password := viper.GetString("database.password")
 	charset := viper.GetString("database.charset")
+	loc := viper.GetString("database.loc") // 时区
 
 	// 构造 DSN (Data Source Name)
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
+		"%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true&loc=%s",
 		username,
 		password,
 		host,
 		port,
 		databaseName,
 		charset,
+		loc,
 	)
 	fmt.Println(dsn)
 

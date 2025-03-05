@@ -82,17 +82,23 @@ func Reigster(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-	// 获取参数
-	name := c.PostForm("name")
-	telephone := c.PostForm("telephone")
-	password := c.PostForm("password")
+	// 获取不到JSOIN参数
+	// name := c.PostForm("name")
+	// telephone := c.PostForm("telephone")
+	// password := c.PostForm("password")
+
+	// 2.1使用结构体获取参数
+	var requestUser = model.User{}
+	//json.NewDecoder(c.Request.Body).Decode(&requestUser)
+
+	// 2.2使用结构体获取参数，等价于以下代码
+	c.Bind(&requestUser)
+	//name := requestUser.Name
+	telephone := requestUser.Telephone
+	password := requestUser.Password
+
 	// 数据验证
 
-	if len(name) == 0 {
-		//name = utils.RandomString(10)
-		response.Response(c, http.StatusOK, 200, nil, "name长度为0，已分配随机昵称")
-		//return
-	}
 	if len(telephone) != 11 {
 		response.Response(c, http.StatusUnprocessableEntity, 422, nil, "手机号错误")
 		return
