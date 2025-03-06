@@ -16,8 +16,8 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	categoryController := controller.NewCategoryController()
 	CategoryRouters.POST("", categoryController.Create)
 	CategoryRouters.PUT("/:id", categoryController.Update) // 传一个更新分类的ID
-	CategoryRouters.GET("", categoryController.Show)
-	CategoryRouters.DELETE("", categoryController.Remove)
+	CategoryRouters.GET("/:id", categoryController.Show)
+	CategoryRouters.DELETE("/:id", categoryController.Remove)
 
 	//CategoryRouters.PATCH() // PATCH局部修改，put是替换，一个模型替换另一个模型，patch补丁，只修改其中的一部分
 	return r
